@@ -1,0 +1,28 @@
+{
+  "bin": {
+    "destiny": "./index.js"
+  },
+  "peerDependencies": {
+    "karma": "~1.7.1"
+  },
+  "dependencies": {
+    "express": "~4.15.4",
+    "karma": "^1.7.1"
+  },
+  "name": "destiny-runner",
+  "version": "0.0.1",
+  "description": "A simple GUI runner for Karma.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "karma",
+    "runner"
+  ],
+  "author": "Jakub Leśniak",
+  "license": "ISC",
+  "devDependencies": {
+    "parent-require": "^1.0.0"
+  }
+}
