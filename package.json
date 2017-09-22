@@ -10,7 +10,7 @@
     "karma": "^1.7.1"
   },
   "name": "destiny-runner",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A simple GUI runner for Karma.",
   "main": "index.js",
   "scripts": {
