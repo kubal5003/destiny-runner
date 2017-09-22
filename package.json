@@ -22,6 +22,7 @@
   ],
   "author": "Jakub Leśniak",
   "license": "ISC",
+  "repository": "https://github.com/kubal5003/destiny-runner.git",
   "devDependencies": {
     "parent-require": "^1.0.0"
   }
