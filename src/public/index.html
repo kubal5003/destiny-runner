@@ -15,6 +15,10 @@
 
         socket.on('karma_update', function(msg){
             $('#updates').append($('<div>').text(msg));
+            console.log(msg);
+        });
+        socket.on('parameter', function(msg){
+           console.log(msg);
         });
     });
 </script>

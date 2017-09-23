@@ -33,8 +33,10 @@ let subscribe = function (ev, description, socket) {
     if (!server && karmaMode) {
         console.log('Something went wrong because we are running in Karma mode and there is no server to attach');
     }
-    server && server.on(ev, function () {
+    server && server.on(ev, function (p1, p2) {
         socket.emit('karma_update', description);
+        socket.emit('parameter', p1);
+        socket.emit('parameter', p2);
     });
 };
 
