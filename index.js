@@ -1,7 +1,6 @@
-
 const express = require('express');
 const app = express();
-
+let karmaMode = true;
 let server = undefined;
 try {
     const karma = require('karma');
@@ -18,34 +17,36 @@ try {
     server.start();
 
 
-    //app.use(express.static('./node_modules/destiny-runner/src/public'));
+    app.use(express.static('./node_modules/destiny-runner/src/public'));
 }
-catch (err){
+catch (err) {
+    karmaMode = false;
     console.log('Running without Karma');
-    //app.use(express.static('src/public'));
+    app.use(express.static('src/public'));
 }
-
-
-
-app.use(express.static('./node_modules/destiny-runner/src/public'));
-
 
 const socketIO = require('socket.io');
 var httpServer = require('http').createServer(app);
 const io = socketIO(httpServer);
 
 let subscribe = function (ev, description, socket) {
+    if (!server && karmaMode) {
+        console.log('Something went wrong because we are running in Karma mode and there is no server to attach');
+    }
     server && server.on(ev, function () {
-        socket.broadcast.emit('karma_update', description);
+        socket.emit('karma_update', description);
     });
 };
 
 io.on('connection', function (socket) {
-    subscribe('browser_start', 'Browser starts', socket);
-    subscribe('browser_register', 'Browser is registered', socket);
-    subscribe('browser_complete', 'Browser completed run', socket);
-    subscribe('run_start', 'Test run starts', socket);
-    subscribe('run_complete', 'Test run finished', socket);
+    socket.emit('karma_update', 'Welcome to Destiny');
+    if (karmaMode) {
+        subscribe('browser_start', 'Browser starts', socket);
+        subscribe('browser_register', 'Browser is registered', socket);
+        subscribe('browser_complete', 'Browser completed run', socket);
+        subscribe('run_start', 'Test run starts', socket);
+        subscribe('run_complete', 'Test run finished', socket);
+    }
 });
 
 httpServer.listen(3000, function () {
