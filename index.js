@@ -1,41 +1,46 @@
+
+const express = require('express');
+const app = express();
+
+let server = undefined;
 try {
-    var karma = require('karma');
+    const karma = require('karma');
+    const Server = karma.Server;
+    const karmaConfig = karma.config;
+    const path = require('path');
+    const configuration = karmaConfig.parseConfig(path.resolve('./karma.conf.js'), { port: 1337 });
+
+    server = new Server(configuration, function (exitCode) {
+        console.log('Karma has exited with ' + exitCode);
+        process.exit(exitCode);
+    });
+
+    server.start();
+
+
+    //app.use(express.static('./node_modules/destiny-runner/src/public'));
 }
-catch (err) {
-    var prequire = require('parent-require')
-        , karma = prequire('karma');
+catch (err){
+    console.log('Running without Karma');
+    //app.use(express.static('src/public'));
 }
 
 
-const Server = karma.Server;
-const karmaConfig = karma.config;
-const path = require('path');
 
-const configuration = karmaConfig.parseConfig(path.resolve('./karma.conf.js'), { port: 1337 });
+app.use(express.static('./node_modules/destiny-runner/src/public'));
 
 
-const server = new Server(configuration, function (exitCode) {
-    console.log('Karma has exited with ' + exitCode);
-    process.exit(exitCode);
-});
+const socketIO = require('socket.io');
+var httpServer = require('http').createServer(app);
+const io = socketIO(httpServer);
 
-
-let subscribe = function (event, description, socket) {
-    server.on(event, function () {
+let subscribe = function (ev, description, socket) {
+    server && server.on(ev, function () {
         socket.broadcast.emit('karma_update', description);
     });
 };
 
-server.start();
-
-const express = require('express');
-const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-
-app.use(express.static('./node_modules/destiny-runner/src/public'));
-
-io.on('connection', function(socket){
+io.on('connection', function (socket) {
     subscribe('browser_start', 'Browser starts', socket);
     subscribe('browser_register', 'Browser is registered', socket);
     subscribe('browser_complete', 'Browser completed run', socket);
@@ -43,6 +48,6 @@ io.on('connection', function(socket){
     subscribe('run_complete', 'Test run finished', socket);
 });
 
-app.listen(3000, function () {
+httpServer.listen(3000, function () {
     console.log('Destiny runner listening on port 3000!');
 });
