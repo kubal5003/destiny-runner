@@ -44,5 +44,5 @@ io.on('connection', function(socket){
 });
 
 app.listen(3000, function () {
-    log('Destiny runner listening on port 3000!');
+    console.log('Destiny runner listening on port 3000!');
 });
