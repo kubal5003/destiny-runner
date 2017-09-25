@@ -16,13 +16,21 @@ const app = express();
 const socketIO = require('socket.io');
 var httpServer = require('http').createServer(app);
 const io = socketIO(httpServer);
+let startAttempted = false;
+let karmaStartSuccessful = false;
+let server;
 
 io.on('connection', function (socket) {
     socket.emit('hello', 'Welcome to Destiny, starting Karma for you...');
 
-    let { karmaMode, server } = startKarma();
+    if (!startAttempted) {
+        startAttempted = true;
+        let result = startKarma();
+        karmaStartSuccessful = result.karmaStarted;
+        server = result.server;
+    }
 
-    if (karmaMode) {
+    if (karmaStartSuccessful) {
 
         subscribeToBrowserRegister(server, socket);
         subscribeToBrowserStart(server, socket);
