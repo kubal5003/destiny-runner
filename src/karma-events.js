@@ -23,7 +23,17 @@ module.exports.subscribeToBrowserComplete = (server, socket) => {
 }
 
 module.exports.subscribeToRunStart = (server, socket) => {
+    server && server.on('run_start', function (browsers) {
+        socket.emit('run_start', browsers);
+    });
 }
 
+
 module.exports.subscribeToRunComplete = (server, socket) => {
+    server && server.on('run_complete', function (browsers, results) {
+        socket.emit('run_complete', {
+            browsers: browsers,
+            results: results
+        });
+    });
 }

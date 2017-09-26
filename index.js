@@ -37,6 +37,14 @@ io.on('connection', function (socket) {
         subscribeToBrowserComplete(server, socket);
         subscribeToRunStart(server, socket);
         subscribeToRunComplete(server, socket);
+
+        socket.on('execute', () => {
+            server.start();
+        });
+
+        socket.on('refresh', () => {
+            server.refreshFiles();
+        })
     } else {
         socket.emit('bye_bye', 'Failed to start karma');
     }
