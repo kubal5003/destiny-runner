@@ -1,11 +1,3 @@
-let {
-    subscribeToBrowserStart,
-    subscribeToBrowserComplete,
-    subscribeToBrowserRegister,
-    subscribeToRunComplete,
-    subscribeToRunStart
-} = require('./src/karma-events');
-
 let { startKarma } = require('./src/karma-runner');
 
 
@@ -20,7 +12,7 @@ let startAttempted = false;
 let karmaStartSuccessful = false;
 let server;
 
-io.on('connection', function (socket) {
+io.on('connection', (socket) => {
     socket.emit('hello', 'Welcome to Destiny, starting Karma for you...');
 
     if (!startAttempted) {
@@ -29,14 +21,21 @@ io.on('connection', function (socket) {
         karmaStartSuccessful = result.karmaStarted;
         server = result.server;
     }
+    let subscribe = (e) => {
 
+        server && server.on(e, (...args) => {
+            socket.emit(e, ...args);
+        });
+    }
     if (karmaStartSuccessful) {
-
-        subscribeToBrowserRegister(server, socket);
-        subscribeToBrowserStart(server, socket);
-        subscribeToBrowserComplete(server, socket);
-        subscribeToRunStart(server, socket);
-        subscribeToRunComplete(server, socket);
+        subscribe('browser_start');
+        subscribe('browser_register');
+        subscribe('browser_complete');
+        subscribe('browser_error');
+        subscribe('run_start');
+        subscribe('run_complete');
+        subscribe('browsers_change');
+        subscribe('browsers_ready');
 
         socket.on('execute', () => {
             server.start();
