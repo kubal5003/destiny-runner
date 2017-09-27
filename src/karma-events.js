@@ -14,10 +14,11 @@ module.exports.subscribeToBrowserRegister = (server, socket) => {
 }
 
 module.exports.subscribeToBrowserComplete = (server, socket) => {
-    server && server.on('browser_complete', function (browser, run_info) {
+    server && server.on('browser_complete', function (browser, run_info, x) {
         socket.emit('browser_complete', {
             browser: browser,
-            run_info: run_info
+            run_info: run_info,
+            x: x
         });
     });
 }
@@ -30,10 +31,11 @@ module.exports.subscribeToRunStart = (server, socket) => {
 
 
 module.exports.subscribeToRunComplete = (server, socket) => {
-    server && server.on('run_complete', function (browsers, results) {
+    server && server.on('run_complete', function (browsers, results, x) {
         socket.emit('run_complete', {
             browsers: browsers,
-            results: results
+            results: results,
+            x: x
         });
     });
 }
