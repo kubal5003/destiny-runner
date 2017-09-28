@@ -28,14 +28,13 @@ io.on('connection', (socket) => {
         });
     }
     if (karmaStartSuccessful) {
-        subscribe('browser_start');
-        subscribe('browser_register');
-        subscribe('browser_complete');
-        subscribe('browser_error');
-        subscribe('run_start');
-        subscribe('run_complete');
-        subscribe('browsers_change');
-        subscribe('browsers_ready');
+        let subscriptions = ['browser_start', 'browser_register', 'browser_complete', 'browser_error',
+            'run_start', 'run_complete', 'browsers_change', 'browsers_ready', 'browser_restart_failure',
+            'browser_log', 'browser_complete_with_no_more_retries', 'browser_process_failure',
+            'spec_complete', 'spec_start', 'test_start', 'test_complete'];
+
+        subscriptions.forEach(subscribe);
+
 
         socket.on('execute', () => {
             server.start();
