@@ -1,9 +1,9 @@
 let { startKarma } = require('./src/karma-runner');
-
+const opn = require('opn');
 
 const express = require('express');
 const app = express();
-
+app.use(express.static('./node_modules/destiny-runner-app/dist'));
 
 const socketIO = require('socket.io');
 var httpServer = require('http').createServer(app);
@@ -53,4 +53,5 @@ io.on('connection', (socket) => {
 
 httpServer.listen(3000, function () {
     console.log('Destiny runner listening on port 3000!');
+    opn('http://localhost:3000');
 });

@@ -1,3 +1,5 @@
+
+
 module.exports.startKarma = () => {
     try {
         const karma = require('karma');
@@ -13,8 +15,6 @@ module.exports.startKarma = () => {
 
         server.start();
 
-
-        //app.use(express.static('./node_modules/destiny-runner/src/public'));
         return {
             karmaStarted: true,
             server: server
