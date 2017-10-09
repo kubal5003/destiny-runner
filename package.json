@@ -6,8 +6,10 @@
     "karma": "~1.7.1"
   },
   "dependencies": {
+    "destiny-runner-app": "0.0.4",
     "express": "~4.15.4",
     "karma": "^1.7.1",
+    "opn": "^5.1.0",
     "socket.io": "^2.0.3"
   },
   "name": "destiny-runner",
