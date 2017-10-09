@@ -5,16 +5,16 @@ This package attempts to create a GUI runner for karma. The author doesn't  real
 
 ![Screen from Destiny](https://raw.githubusercontent.com/kubal5003/destiny-runner/master/destiny-screen.png)
 
-###Warning!
+### Warning!
 This is a pre-alpha version. This package will not work (yet..)
 
-###Contributions wanted!
+### Contributions wanted!
 
 This project is currently in its infancy and any contribution is very much wanted & appreciated. Very soon a liberal contribution policy will be adopted.
 If you want to contribute, please read the list below, let me know that you start working on something & go, go, go!
 
 
-###Road to MVP (1.0)
+### Road to MVP (1.0)
 
 The MVP is currently defined as - let Destiny be a drop-in replacement for a console reporter/logger, only more usable one.
 
@@ -35,7 +35,7 @@ This includes:
  Ideally you should be able to run destiny with a headless browser and work on your project.
  
  
- ###Ideas for the future
+ ### Ideas for the future
   
   - Be able to schedule a re-run of only one test / one-suite / multiple-suites. It should render the fdescribe/fit source modification obsolete!
   (most likely requires changes in Karma)
