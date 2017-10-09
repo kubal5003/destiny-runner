@@ -13,7 +13,7 @@
     "socket.io": "^2.0.3"
   },
   "name": "destiny-runner",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "A simple GUI runner for Karma.",
   "main": "index.js",
   "scripts": {
